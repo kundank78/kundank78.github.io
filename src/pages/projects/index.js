@@ -77,7 +77,7 @@ function Projects() {
     <Layout title="Projects" description={siteConfig.tagline}>
       <header className={styles.projectPageHeader}>
         <h2 className="border-0 border-b-4 border-solid border-success">
-          My projects
+          My Projects
         </h2>
       </header>
       <main ref={mainRef} hidden={true}>
