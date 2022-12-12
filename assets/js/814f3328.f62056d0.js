@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkkundan_dev=self.webpackChunkkundan_dev||[]).push([[535],{5641:function(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"GitHub Action for Docusaurus","permalink":"/blog/docusaurus-gh-action"}]}')}}]);
