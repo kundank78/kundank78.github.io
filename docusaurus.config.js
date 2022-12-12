@@ -57,7 +57,7 @@ module.exports = {
         { to: "blog/", label: "Blog", position: "left" },
         { to: "projects/", label: "Projects", position: "left" },
         {
-          href: "https://kundan.dev/pdf/resume.pdf",
+          href: "https://kundank78.github.io/pdf/resume.pdf",
           label: "Resume",
           position: "right",
         },
