@@ -588,9 +588,10 @@ roleRef:
 
 
 ### Helm
+
 ```
-helm repo add [repository-name] [url]
-helm repo remove [repository-name]
+helm repo add repository-name url
+helm repo remove repository-name
 helm repo update
 helm list
 helm search hub package_name
