@@ -1,10 +1,10 @@
 ---
 slug: docusaurus-gh-action
 title: GitHub Action for Docusaurus
-author: Evan Tay
-author_url: https://github.com/DigiPie
-author_title: Software Engineer at Padlet
-author_image_url: https://avatars2.githubusercontent.com/u/13582874
+author: Kundan Kumar
+author_url: https://github.com/kundank78
+author_title: Software Engineer at JP Morgan
+author_image_url: https://avatars.githubusercontent.com/u/25195457
 tags: [docusaurus, github-action, ci]
 ---
 
@@ -74,4 +74,3 @@ GitHub will automatically add `GITHUB_TOKEN` to Secrets. You need not do so. See
 
 :::
 
-To see this script in action, visit my [personal website repo](https://github.com/DigiPie/kaya-folio/actions).
