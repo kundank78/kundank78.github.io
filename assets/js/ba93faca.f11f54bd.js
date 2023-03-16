@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkkundan_dev=self.webpackChunkkundan_dev||[]).push([[988],{1585:function(a){a.exports=JSON.parse('{"label":"ckad","permalink":"/blog/tags/ckad","allTagsPath":"/blog/tags","count":1}')}}]);
