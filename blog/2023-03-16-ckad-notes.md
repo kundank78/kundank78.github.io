@@ -1,14 +1,14 @@
 ---
-slug: cheeat-sheet-ckad
+slug: cheat-sheet-ckad
 title: Cheat Sheet for CKAD
 author: Kundan Kumar
 author_url: https://github.com/kundank78
 author_title: Software Engineer at JP Morgan
 author_image_url: https://avatars.githubusercontent.com/u/25195457
-tags: [go, bittorrent]
+tags: [ckad, kubernetes]
 ---
 
-I got my CKAD certification in Dec, 2022 and I faced difficulty memorizing all the k8s object yamls & imperative commands. Cracking CKAD needs crystal k8s concepts along with bit of a practice K8s commands. Sharing below notes taken during my preparation.
+Cracking CKAD examination requires not only a solid comprehension of Kubernetes concepts but also proficiency in executing K8 commands. In this following, I have shared notes which I took during my CKAD preparation. I faced difficulty memorizing all Kubernetes object YAMLs and imperative commands, I consolidate all configurations in a single location as a comprehensive revision guide before the exam. I hope these notes can help you out too!
 
 <!--truncate-->
 
@@ -24,7 +24,7 @@ k delete pod pod_name $now
 
 ```
 
-### K8s Cluster & Namespace Commands
+### K8s Cluster
 - `k cluster-info`
 - `k get nodes`
 
