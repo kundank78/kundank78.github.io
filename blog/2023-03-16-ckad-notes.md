@@ -57,16 +57,16 @@ spec:
 ```
 
 ### Deployment
-- k create deploy deployment_name --image=image_name --replicas=no_of_pods
-- k scale deploy deploy_name --replicas=no_of_pods
-- k edit deploy deploy_name                                              ----> edit any field of deployment
-- k set image deploy deploy_name container_name=nginx:1.9.1 --record     ----> changed image to different version with record flag capturing cmd used
+- `*k create deploy deployment_name --image=image_name --replicas=no_of_pods*`
+- `*k scale deploy deploy_name --replicas=no_of_pods*`
+- `*k edit deploy deploy_name*`                                              ----> edit any field of deployment
+- `*k set image deploy deploy_name container_name=nginx:1.9.1 --record*`     ----> changed image to different version with record flag capturing cmd used
 
-- k rollout status deploy deploy_name
-- k rollout history deploy deploy_name                                   ----> show revisions of deployment
-- k rollout undo deploy deploy_name                                      ----> undo deployment to last revision
-- k rollout history deploy deploy_name --revision=number                 ----> describe deployment of revision number
-- k rollout undo deploy deploy_name --to-revision=number                 ----> rollback deployment to specific version
+- `*k rollout status deploy deploy_name*`
+- `*k rollout history deploy deploy_name*`                                   ----> show revisions of deployment
+- `*k rollout undo deploy deploy_name*`                                      ----> undo deployment to last revision
+- `*k rollout history deploy deploy_name --revision=number*`                 ----> describe deployment of revision number
+- `*k rollout undo deploy deploy_name --to-revision=number*`                 ----> rollback deployment to specific version
 
 ```yml
 ---
@@ -100,8 +100,8 @@ spec:
 ```
 
 ### Namespace
-- `k config set-context --current --namespace=namespace_name`
-- `k port-forward svc/my-service 5000`
+- `*k config set-context --current --namespace=namespace_name*`
+- `*k port-forward svc/my-service 5000*`
 
 ```yml
 ---
@@ -129,16 +129,16 @@ spec:
 - POD Conditions
 - PodScheduled -> Initialized -> ContainersReady -> Ready
 
-- *k logs -f pod_name container_name*               #tail logs for container_name for multi container pod
-- *k replace -f pod.yaml --force*                   # replace existing pod with new one
-- *k get pods -l key=value --no-headers | wc -l*    # count of pod
-- *k get pod --show-labels*
-- *k label po -l "app in(v1,v2)" tier=web*
+- `*k logs -f pod_name container_name*`               # tail logs for container_name for multi container pod
+- `*k replace -f pod.yaml --force*`                   # replace existing pod with new one
+- `*k get pods -l key=value --no-headers | wc -l*`    # count of pod
+- `*k get pod --show-labels*`
+- `*k label po -l "app in(v1,v2)" tier=web*`
 
 ##### Taint Node
-- *k taint node node_name key=value:taint-effect*  | Effects: NoSchedule, PreferNoSchedule, NoExecute
-- *k taint node node_name key=value:taint-effect-* | Remove taint
-- *k label node node_name key=value*
+- `*k taint node node_name key=value:taint-effect*`  | Effects: NoSchedule, PreferNoSchedule, NoExecute
+- `*k taint node node_name key=value:taint-effect-*` | Remove taint
+- `*k label node node_name key=value*`
 
 ```yml
 apiVersion: v1
@@ -260,8 +260,8 @@ spec:
 
 ### Config Map
 
-- *k create configmap config_map_name --from-literal=KEY1=VALUE1 --from-literal=KEY2=VALUE2*
-- *k create configmap config_map_name --from-file=file_name.properties*
+- `*k create configmap config_map_name --from-literal=KEY1=VALUE1 --from-literal=KEY2=VALUE2*`
+- `*k create configmap config_map_name --from-file=file_name.properties*`
 
 ```yml
 ---
@@ -274,3 +274,60 @@ spec:
   key2: value2
 ```
 
+### Secrets
+- `*echo -n 'encode' | base64*`
+- `*echo -n 'decode' | base64 --decode*`
+- `*k create secret secret_name --from-literal=KEY1=VALUE1 --from-literal=KEY2=VALUE2*`
+- `*k create secret secret_name --from-file=file_name.properties*`
+
+```yml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret_name
+spec:
+  key1: value1
+  key2: value2
+```
+
+### Jobs & CronJob
+- `*k create job job_name --image=image_name -- command*`
+- `*k create cronjob cron_name --image=image_name --schedule="* * * * *"*`
+
+```yml
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job_name
+spec:
+  completions: 3                            ----> no. of successful job completions | new pods are created until this number is reached
+  parallelism: 3                            ----> creates pods in parallel
+  template:
+    spec:
+      containers:
+        - name: container_name
+          image: image_name
+          command:
+            - cmd1
+      restartPolicy: Never
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cron-job-name
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      completions: 3
+      parallelism: 3
+      template:
+        spec:
+          containers:
+            - name: container_name
+              image: image_name
+          restartPolicy: Never
+```
