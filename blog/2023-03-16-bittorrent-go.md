@@ -1,6 +1,6 @@
 ---
-slug: docusaurus-gh-action
-title: GitHub Action for Docusaurus
+slug: cheeat-sheet-ckad
+title: Cheat Sheet for CKAD
 author: Kundan Kumar
 author_url: https://github.com/kundank78
 author_title: Software Engineer at JP Morgan
