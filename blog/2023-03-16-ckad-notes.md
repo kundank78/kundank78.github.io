@@ -584,8 +584,7 @@ roleRef:
    In Kubernetes versions -> X.Y.Z
    Where X stands for major, Y stands for minor and Z stands for patch version.
 - `k convert -f <old_file> --output-version group/version`
-- Add --runtime-config=<api-group>/<version>  --> enable new version
-
+- Add --runtime-config={api-group}/{version}  --> enable new version
 
 ### Helm
 
