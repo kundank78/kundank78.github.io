@@ -290,6 +290,22 @@ spec:
   key1: value1
   key2: value2
 ```
+### Service Accounts
+```
+when service account is created a token is generated as secret | This used happen before kube 1.24, after
+1.24 you can create token using `k create token service_account_name` this prints token with expiry time
+Token can be passed as a bearer token while calling kube apis
+Each namespace has its own service account
+Pod when created is mounted with volume having token created via token request api(has expiry)
+```
+``` 
+ k create sa service_account_name
+ k create token <sa_name>
+``` 
+ Manually create long-lived token for service account
+ Annotate secret with kubernetes.io/service-account.name: <sa_name> and controller will auto-inject token inside the secret
+
+
 
 ### Jobs & CronJob
 - `*k create job job_name --image=image_name -- command*`
@@ -330,4 +346,264 @@ spec:
             - name: container_name
               image: image_name
           restartPolicy: Never
+```
+
+
+### Service
+```yml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service_name
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 80                                   # container's port
+      port: 80                                         # service port
+      nodePort: 30008
+  selector:
+      key: value
+      key1: value1
+```
+
+##### Load Balancing through services is done in random fashion
+##### ClusterIP : creates a virtual ip
+##### LoadBalancer
+##### NodePort (Range: 30000 - 32767): Exposes node port for every node if pods are distributed
+
+- `*k expose pod pod_name --port=port_number --name=svc_name*`        ----> create cluster ip service with pod's label as selectors
+- `*k create svc clusterip svc_name --tcp=?:?*`                       ----> create cluster ip service with selector's as app=svc_name
+
+- `*k expose pod pod_name --port=80 --type=NodePort*`                 ----> create node port service with pod's label as selectors
+- `*k create svc nodeport svc_name --tcp=?:? --node-port=node_port*`  ----> create nodeport svc with defined node port but doesn't use pod's labels as selectors
+
+
+### Ingress
+
+```yml
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress_name
+spec:
+  rules:
+    - host: host_name
+      http:
+        paths:
+          - path: /path1
+            pathType: Prefix
+            backend:
+              service:
+                name: svc_name
+                port:
+                  number: port_number
+          - path: /path2
+            pathType: Prefix
+            backend:
+              service:
+                name: svc_name2
+                port:
+                  number: port_number2
+```
+
+- `*kubectl create ingress <ingress-name> --rule="host/path=service:port"*`
+- `*kubectl create ingress ingress-test --rule="wear.my-online-store.com/wear*=wear-service:80"*`
+
+### Network Policy
+
+```yml
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: name
+  namespace: pod_namespace
+spec:
+  podSelector:
+    matchLabels:
+      key: value
+  policyTypes:                           # If only policyTypes is present it blocks all Ingress & Egress traffic
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              key: other-pod
+          namespaceSelector:             # If only namespace selector defined all pods under given ns will be able to access
+            matchLabels:
+              name: other_ns_name
+        - ipBlock:
+            cidr: 192.168.5.10/32
+      ports:
+        - protocol: TCP
+          port: 3306                     # incoming traffic on port
+  egress:
+    to:
+      - ipBlock:
+          cidr: 192.168.5.10/32
+    ports:
+      - protocol: TCP
+        port: 80                         # port on server ip
+```
+
+### Volumes
+
+```yml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv_name
+spec:
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+    - ReadWriteMany
+  capacity:
+    storage: 1Gi
+  persistentVolumeReclaimPolicy: Recycle | Retain | Delete
+  awsElasticBlockStore:
+    volumeID: volume_id
+    fsType: ext4
+  hostPath:
+    path: "/mnt/data"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc_name
+spec:
+  storageClassName: manual | normal
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+
+```
+
+### Kube API Server & API Groups
+
+##### Edit the kube-apiserver static pod configured by kubeadm to pass in the user details. 
+##### The file is located at /etc/kubernetes/manifests/kube-apiserver.yaml
+
+- `*k config use-context context_name*`
+- `*k config view*`
+- `*k config set-context --current --namespace=name*`
+
+
+### API Groups
+- `*k proxy*`     ---> exposes kube api on local        
+- `*k api-resources --namespaced=true *`
+- Actions- list, get, create, update, delete, watch
+
+```yml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  containers:
+    - command:
+        - kube-apiserver
+        - --authorization-mode=Node,RBAC
+          <content-hidden>
+        - --basic-auth-file=/tmp/users/user-details.csv
+      image: k8s.gcr.io/kube-apiserver-amd64:v1.11.3
+      name: kube-apiserver
+      volumeMounts:
+        - mountPath: /tmp/users
+          name: usr-details
+          readOnly: true
+  volumes:
+    - hostPath:
+        path: /tmp/users
+        type: DirectoryOrCreate
+      name: usr-details
+```
+
+### Roles
+- `*k create role role_name --verb=get,ist --resources=pods,pods/status --resource-name*`
+- `*k create rolebinding role_binding_name --clusterrole=cluster_role_name --user=user_name --namespace=ns_name*`
+- `*k auth can-i <cmd> -as user*`
+
+```yml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+  - apiGroups: [""] # "" indicates the core API group
+    resources: ["pods", "pods/log"]
+    verbs: ["get", "watch", "list"] | # ["*"] --> everything
+
+---
+# This role binding allows "user1" to read pods in the "default" namespace.
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+  - kind: User
+    name: user1 # Name is case-sensitive
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role #this must be Role or ClusterRole
+  name: pod-reader # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
+```
+
+
+### API Versions
+
+##### vXalphaY --> vXbetaY --> vX
+
+##### Alpha -> Not enabled by default
+##### Beta -> Enabled by default
+##### GA(Stable) -> Enabled by default
+
+##### Preferred version -> version k8s will use while retrieving info
+##### Storage Version -> version objects will converted to while storing in etcd cluster
+
+### API Deprecations
+1. Api elements can be removed only by incrementing API version of group
+2. Api objects must be able to round trip between API versions in a given release without information loss
+   with exception of whole REST resources which don't exist in some version
+3. Other than the most recent API version in each track, older API version must be supported after their announced
+   deprecation for a duration of no less than-
+   a. GA (stable)- 12 months or 3 releases (whichever is longer)
+   b. Beta - 9 months or 3 releases (whichever is longer)
+   c. Alpha - 0 releases
+In Kubernetes versions -> X.Y.Z
+Where X stands for major, Y stands for minor and Z stands for patch version.
+- `*k convert -f <old_file> --output-version group/version*`
+- Add --runtime-config=<api-group>/<version>  --> enable new version
+
+
+### Helm
+```
+helm repo add [repository-name] [url]
+helm repo remove [repository-name]
+helm repo update
+helm list
+helm search hub package_name
+helm search repo package_name
+helm show chart repo/package
+helm show values repo/package
+
+helm get manifest release_name
+helm install release_name chart_name
+helm status release_name
+helm upgrade release_name repo/package
+helm history release_name
+helm rollback release_name version
+helm uninstall release-name
+helm pull --untar repo/chart_name
 ```
