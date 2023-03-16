@@ -57,16 +57,16 @@ spec:
 ```
 
 ### Deployment
-- `*k create deploy deployment_name --image=image_name --replicas=no_of_pods*`
-- `*k scale deploy deploy_name --replicas=no_of_pods*`
-- `*k edit deploy deploy_name*`                                              ----> edit any field of deployment
-- `*k set image deploy deploy_name container_name=nginx:1.9.1 --record*`     ----> changed image to different version with record flag capturing cmd used
+- `k create deploy deployment_name --image=image_name --replicas=no_of_pods`
+- `k scale deploy deploy_name --replicas=no_of_pods`
+- `k edit deploy deploy_name`                                              ----> edit any field of deployment
+- `k set image deploy deploy_name container_name=nginx:1.9.1 --record`     ----> changed image to different version with record flag capturing cmd used
 
-- `*k rollout status deploy deploy_name*`
-- `*k rollout history deploy deploy_name*`                                   ----> show revisions of deployment
-- `*k rollout undo deploy deploy_name*`                                      ----> undo deployment to last revision
-- `*k rollout history deploy deploy_name --revision=number*`                 ----> describe deployment of revision number
-- `*k rollout undo deploy deploy_name --to-revision=number*`                 ----> rollback deployment to specific version
+- `k rollout status deploy deploy_name`
+- `k rollout history deploy deploy_name`                                   ----> show revisions of deployment
+- `k rollout undo deploy deploy_name`                                      ----> undo deployment to last revision
+- `k rollout history deploy deploy_name --revision=number`                 ----> describe deployment of revision number
+- `k rollout undo deploy deploy_name --to-revision=number`                 ----> rollback deployment to specific version
 
 ```yml
 ---
@@ -100,8 +100,8 @@ spec:
 ```
 
 ### Namespace
-- `*k config set-context --current --namespace=namespace_name*`
-- `*k port-forward svc/my-service 5000*`
+- `k config set-context --current --namespace=namespace_name`
+- `k port-forward svc/my-service 5000`
 
 ```yml
 ---
@@ -129,16 +129,16 @@ spec:
 - POD Conditions
 - PodScheduled -> Initialized -> ContainersReady -> Ready
 
-- `*k logs -f pod_name container_name*`               # tail logs for container_name for multi container pod
-- `*k replace -f pod.yaml --force*`                   # replace existing pod with new one
-- `*k get pods -l key=value --no-headers | wc -l*`    # count of pod
-- `*k get pod --show-labels*`
-- `*k label po -l "app in(v1,v2)" tier=web*`
+- `k logs -f pod_name container_name`               # tail logs for container_name for multi container pod
+- `k replace -f pod.yaml --force`                   # replace existing pod with new one
+- `k get pods -l key=value --no-headers | wc -l`    # count of pod
+- `k get pod --show-labels`
+- `k label po -l "app in(v1,v2)" tier=web`
 
 ##### Taint Node
-- `*k taint node node_name key=value:taint-effect*`  | Effects: NoSchedule, PreferNoSchedule, NoExecute
-- `*k taint node node_name key=value:taint-effect-*` | Remove taint
-- `*k label node node_name key=value*`
+- `k taint node node_name key=value:taint-effect`  | Effects: NoSchedule, PreferNoSchedule, NoExecute
+- `k taint node node_name key=value:taint-effect-` | Remove taint
+- `k label node node_name key=value`
 
 ```yml
 apiVersion: v1
@@ -260,8 +260,8 @@ spec:
 
 ### Config Map
 
-- `*k create configmap config_map_name --from-literal=KEY1=VALUE1 --from-literal=KEY2=VALUE2*`
-- `*k create configmap config_map_name --from-file=file_name.properties*`
+- `k create configmap config_map_name --from-literal=KEY1=VALUE1 --from-literal=KEY2=VALUE2`
+- `k create configmap config_map_name --from-file=file_name.properties`
 
 ```yml
 ---
@@ -275,10 +275,10 @@ spec:
 ```
 
 ### Secrets
-- `*echo -n 'encode' | base64*`
-- `*echo -n 'decode' | base64 --decode*`
-- `*k create secret secret_name --from-literal=KEY1=VALUE1 --from-literal=KEY2=VALUE2*`
-- `*k create secret secret_name --from-file=file_name.properties*`
+- `echo -n 'encode' | base64`
+- `echo -n 'decode' | base64 --decode`
+- `k create secret secret_name --from-literal=KEY1=VALUE1 --from-literal=KEY2=VALUE2`
+- `k create secret secret_name --from-file=file_name.properties`
 
 ```yml
 ---
@@ -302,14 +302,14 @@ Pod when created is mounted with volume having token created via token request a
  k create sa service_account_name
  k create token <sa_name>
 ``` 
- Manually create long-lived token for service account
- Annotate secret with kubernetes.io/service-account.name: <sa_name> and controller will auto-inject token inside the secret
+Manually create long-lived token for service account
+Annotate secret with kubernetes.io/service-account.name: <sa_name> and controller will auto-inject token inside the secret
 
 
 
 ### Jobs & CronJob
-- `*k create job job_name --image=image_name -- command*`
-- `*k create cronjob cron_name --image=image_name --schedule="* * * * *"*`
+- `k create job job_name --image=image_name -- command`
+- `k create cronjob cron_name --image=image_name --schedule="* * * * *"`
 
 ```yml
 ---
@@ -372,11 +372,11 @@ spec:
 ##### LoadBalancer
 ##### NodePort (Range: 30000 - 32767): Exposes node port for every node if pods are distributed
 
-- `*k expose pod pod_name --port=port_number --name=svc_name*`        ----> create cluster ip service with pod's label as selectors
-- `*k create svc clusterip svc_name --tcp=?:?*`                       ----> create cluster ip service with selector's as app=svc_name
+- `k expose pod pod_name --port=port_number --name=svc_name`        ----> create cluster ip service with pod's label as selectors
+- `k create svc clusterip svc_name --tcp=?:?`                       ----> create cluster ip service with selector's as app=svc_name
 
-- `*k expose pod pod_name --port=80 --type=NodePort*`                 ----> create node port service with pod's label as selectors
-- `*k create svc nodeport svc_name --tcp=?:? --node-port=node_port*`  ----> create nodeport svc with defined node port but doesn't use pod's labels as selectors
+- `k expose pod pod_name --port=80 --type=NodePort`                 ----> create node port service with pod's label as selectors
+- `k create svc nodeport svc_name --tcp=?:? --node-port=node_port`  ----> create nodeport svc with defined node port but doesn't use pod's labels as selectors
 
 
 ### Ingress
@@ -408,8 +408,8 @@ spec:
                   number: port_number2
 ```
 
-- `*kubectl create ingress <ingress-name> --rule="host/path=service:port"*`
-- `*kubectl create ingress ingress-test --rule="wear.my-online-store.com/wear*=wear-service:80"*`
+- `kubectl create ingress <ingress-name> --rule="host/path=service:port"`
+- `kubectl create ingress ingress-test --rule="wear.my-online-store.com/wear*=wear-service:80"`
 
 ### Network Policy
 
@@ -487,17 +487,17 @@ spec:
 
 ### Kube API Server & API Groups
 
-##### Edit the kube-apiserver static pod configured by kubeadm to pass in the user details. 
+##### Edit the kube-apiserver static pod configured by kubeadm to pass in the user details.
 ##### The file is located at /etc/kubernetes/manifests/kube-apiserver.yaml
 
-- `*k config use-context context_name*`
-- `*k config view*`
-- `*k config set-context --current --namespace=name*`
+- `k config use-context context_name`
+- `k config view`
+- `k config set-context --current --namespace=name`
 
 
 ### API Groups
-- `*k proxy*`     ---> exposes kube api on local        
-- `*k api-resources --namespaced=true *`
+- `k proxy`     ---> exposes kube api on local
+- `k api-resources --namespaced=true `
 - Actions- list, get, create, update, delete, watch
 
 ```yml
@@ -528,9 +528,9 @@ spec:
 ```
 
 ### Roles
-- `*k create role role_name --verb=get,ist --resources=pods,pods/status --resource-name*`
-- `*k create rolebinding role_binding_name --clusterrole=cluster_role_name --user=user_name --namespace=ns_name*`
-- `*k auth can-i <cmd> -as user*`
+- `k create role role_name --verb=get,ist --resources=pods,pods/status --resource-name`
+- `k create rolebinding role_binding_name --clusterrole=cluster_role_name --user=user_name --namespace=ns_name`
+- `k auth can-i <cmd> -as user`
 
 ```yml
 kind: Role
@@ -581,9 +581,9 @@ roleRef:
    a. GA (stable)- 12 months or 3 releases (whichever is longer)
    b. Beta - 9 months or 3 releases (whichever is longer)
    c. Alpha - 0 releases
-In Kubernetes versions -> X.Y.Z
-Where X stands for major, Y stands for minor and Z stands for patch version.
-- `*k convert -f <old_file> --output-version group/version*`
+   In Kubernetes versions -> X.Y.Z
+   Where X stands for major, Y stands for minor and Z stands for patch version.
+- `k convert -f <old_file> --output-version group/version`
 - Add --runtime-config=<api-group>/<version>  --> enable new version
 
 
