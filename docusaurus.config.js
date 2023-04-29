@@ -105,6 +105,15 @@ module.exports = {
         },
       },
     ],
+    [
+      '@docusaurus/preset-classic',
+      {
+        gtag: {
+          trackingID: 'G-L77M1EX8JW',
+          anonymizeIP: true,
+        },
+      },
+    ],
   ],
   stylesheets: [
     {
