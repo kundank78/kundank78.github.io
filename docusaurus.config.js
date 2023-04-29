@@ -98,16 +98,11 @@ module.exports = {
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
-//          editUrl: "https://github.com/DigiPie/kaya-folio/tree/main/website/",
+        //  editUrl: "https://github.com/kundank78/kaya-folio/tree/main/website/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
-      },
-    ],
-    [
-      '@docusaurus/preset-classic',
-      {
         gtag: {
           trackingID: 'G-L77M1EX8JW',
           anonymizeIP: true,
