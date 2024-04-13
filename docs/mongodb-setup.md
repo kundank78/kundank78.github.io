@@ -2,9 +2,7 @@
 title: MongoDB Setup
 ---
 
-Published on December 23, 2020
-
-_This document was migrated from [DigiDocs](https://digipie.github.io/digidocs/mongodb/local-setup/)_
+Published on December 23, 2021
 
 The purpose of this guide is to quickly set up a local copy of MongoDB **on Windows** for local development purposes. Authentication will not be enabled or covered in this tutorial.
 

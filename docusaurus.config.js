@@ -55,6 +55,7 @@ module.exports = {
       },
       items: [
         { to: "blog/", label: "Blog", position: "left" },
+        { to: "docs/", label: "Snippets", position: "left", activeBasePath: "docs" },
         { to: "projects/", label: "Projects", position: "left" },
         {
           href: "https://kundank78.github.io/pdf/resume.pdf",
