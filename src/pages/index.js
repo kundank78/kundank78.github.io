@@ -63,7 +63,7 @@ function Home() {
           <div class={styles.aboutText}>
             <h2>Hi</h2>
             <p>
-              I am Kundan, a Software Engineer with 3 years of experience in software development. I am currently exploring Kubernetes & public cloud domain.
+              I am Kundan, a Software Engineer with 4 years of experience in software development. I am currently exploring Distributed Systems & Database Internals.
             </p>
             <p>
               🚀 I love experimenting with tools & languages. Please checkout my recent  {" "}
@@ -78,11 +78,11 @@ function Home() {
             </p>
             <p>
               🎒 I was a{" "}
-              <a href="https://www.comp.nus.edu.sg/programmes/ug/cs/">
+              <a>
                 Electronics & Communication
               </a>{" "}
               major at the{" "}
-              <a href="https://www.comp.nus.edu.sg/">
+              <a href="https://www.iitr.ac.in/">
                 IIT Roorkee
               </a>{" "}
               from 2016 to 2020.

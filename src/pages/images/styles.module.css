@@ -1,0 +1,9 @@
+.float-button {
+    position: fixed;
+    bottom: 20px; /* Adjust spacing from the bottom */
+    left: 50%;
+    transform: translateX(-50%); /* Centers the button horizontally */
+    border-radius: 50%; /* Makes it a circle */
+
+    /* Add more styling like background-color, box-shadow, etc. */
+}

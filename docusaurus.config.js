@@ -22,6 +22,10 @@ const internetProfiles = {
     label: "Projects",
     to: "projects",
   },
+  images: {
+    label: "Images",
+    to: "images",
+  },
   resume: {
     label: "Resume",
     href: "https://www.linkedin.com/in/kundan-kumar-77a613a9/overlay/1635493534947/single-media-viewer/",
@@ -57,6 +61,7 @@ module.exports = {
         { to: "blog/", label: "Blog", position: "left" },
         { to: "docs/", label: "Snippets", position: "left", activeBasePath: "docs" },
         { to: "projects/", label: "Projects", position: "left" },
+        { to: "images/", label: "Travel Photos", position: "left" },
         {
           href: "https://kundank78.github.io/pdf/resume.pdf",
           label: "Resume",
