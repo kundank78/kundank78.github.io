@@ -2,11 +2,28 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kundank78.github.io/blog</id>
     <title>Kundan Kumar Blog</title>
-    <updated>2023-03-16T00:00:00.000Z</updated>
+    <updated>2024-05-06T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kundank78.github.io/blog"/>
     <subtitle>Kundan Kumar Blog</subtitle>
     <icon>https://kundank78.github.io/img/logo.png</icon>
+    <entry>
+        <title type="html"><![CDATA[Here I am]]></title>
+        <id>here-i-am</id>
+        <link href="https://kundank78.github.io/blog/here-i-am"/>
+        <updated>2024-05-06T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Fueled by my midnight coffee & desperate need to stop procrastinating.]]></summary>
+        <content type="html"><![CDATA[<p>Fueled by my midnight coffee &amp; desperate need to stop procrastinating.
+Finally starting my tech blog - spent a good solid 30 minutes finding a good blogging site and copying its vibe.</p><h4 class="anchor anchorWithHideOnScrollNavbar_WYt5" id="so-here-is-my-hello-world-moment">So, here is my <code>Hello World!!</code> moment<a class="hash-link" href="#so-here-is-my-hello-world-moment" title="Direct link to heading">​</a></h4><p>I am Kundan Kumar, a software engineer since 2020. JAVA is my coding jam for work.
+Lately, obsessed with Distributed Systems &amp; Database Internals and also trying to convince myself Golang is my best friend.
+My blog might not be the best ones you will find in the chaotic internet sea, but I will try to give some good tech tidbits
+&amp; inspire you a bit.
+My goal is to learn, share &amp; maybe, just maybe, make this blog worth your time. Wish me luck!.</p>]]></content>
+        <author>
+            <name>Kundan Kumar</name>
+            <uri>https://github.com/kundank78</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Cheat Sheet for CKAD]]></title>
         <id>cheat-sheet-ckad</id>
