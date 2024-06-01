@@ -1,6 +1,6 @@
 ---
 slug: unix-system-calls
-title: Unix System Calls
+title: System Calls
 author: Kundan Kumar
 author_url: https://github.com/kundank78
 author_title: Software Engineer at JP Morgan
@@ -8,10 +8,11 @@ author_image_url: https://avatars.githubusercontent.com/u/25195457
 tags: [unix, system-calls]
 ---
 
-System calls as the name implies is a request from user program for Operating System to 
-do something on behalf of user program. It looks like normal function call from user program.
-Whether you want to write/read from a file, make network call etc. a system call runs behind 
-the scenes. Today we are going to cover the read/write system call and intricacies around it.
+System calls, as the name suggests, are requests made by a user program to the operating system to perform 
+certain tasks on behalf of the program. They resemble regular function calls initiated by the user program. 
+Whether it's writing to or reading from a file, making network calls, or other operations, system calls 
+work behind the scenes to facilitate these actions. Today, we'll delve into the read and write system calls 
+and explore the intricacies surrounding them.
 
 ### Read System Call
 
