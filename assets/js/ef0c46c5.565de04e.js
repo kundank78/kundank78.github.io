@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkkundan_dev=self.webpackChunkkundan_dev||[]).push([[232],{495:function(a){a.exports=JSON.parse('{"label":"unix","permalink":"/blog/tags/unix","allTagsPath":"/blog/tags","count":1}')}}]);

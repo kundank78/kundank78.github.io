@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkkundan_dev=self.webpackChunkkundan_dev||[]).push([[712],{2891:function(s){s.exports=JSON.parse('{"label":"system-calls","permalink":"/blog/tags/system-calls","allTagsPath":"/blog/tags","count":1}')}}]);
